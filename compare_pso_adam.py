@@ -732,20 +732,26 @@ def objective(trial,optimizer_name):
     transition_slope = trial.suggest_float('transition_slope', 0.16, 0.18)  # Transition slope
 
     # Create optimizer with hyperparameters
-    optimizer_params = {
-        'lr': lr,
-        'threshold': threshold,
-        'shift_boundary': shift_boundary,
-        'min_gradient_magnitude': min_gradient_magnitude,
-        'optimal_weight': optimal_weight,
-        'A': A,
-        'f': f,
-        'phi': phi,
-        'C': C,
-        'phase_shift_loss_weight': phase_shift_loss_weight,
-        'transition_slope': transition_slope,
-        'optimizer_name': optimizer_name
-    }
+    if optimizer_name == "PSO":
+        optimizer_params = {
+            'lr': lr,
+            'threshold': threshold,
+            'shift_boundary': shift_boundary,
+            'min_gradient_magnitude': min_gradient_magnitude,
+            'optimal_weight': optimal_weight,
+            'A': A,
+            'f': f,
+            'phi': phi,
+            'C': C,
+            'phase_shift_loss_weight': phase_shift_loss_weight,
+            'transition_slope': transition_slope,
+            'optimizer_name': optimizer_name
+        }
+    else:
+        optimizer_params = {
+            'lr': lr,
+            'optimizer_name': optimizer_name
+        }
 
     # Training and Evaluation function
     average_val_metric, average_f1_score = cross_validate(train_loader, val_loader, test_loader, optimizer_params, k_folds, trial)
