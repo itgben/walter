@@ -799,18 +799,14 @@ study_pso = optuna.create_study(direction='minimize', pruner=pso_pruner, study_n
 study_pso.optimize(lambda trial: objective(trial, 'PSO'), n_trials=50)
 
 
-# Print best parameters
-print(study_pso.best_params)
-print(study_adam.best_params)
-
-
-# Save the trials data frame as a CSV file
 study_pso_df = study_pso.trials_dataframe()
 study_pso_df.to_csv(os.path.join(pso_folder_name, "trials.csv"), index=False)
 
 study_adam_df = study_adam.trials_dataframe()
 study_adam_df.to_csv(os.path.join(adam_folder_name, "trials.csv"), index=False)
 
+print(study_pso.best_params)
+print(study_adam.best_params)
 print(study_pso_df)
 print(study_adam_df)
 
