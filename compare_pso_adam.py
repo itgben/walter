@@ -790,13 +790,12 @@ os.makedirs(adam_folder_name)
 adam_study_file_path = os.path.join(adam_folder_name, "study.db")
 adam_study_name = "cifar_adam_study"
 
-pruner = MedianPruner(n_startup_trials=1, n_warmup_steps=1, interval_steps=1)
-
-study_adam = optuna.create_study(direction='minimize', pruner=pruner, study_name=adam_study_name, storage=f"sqlite:///{adam_study_file_path}")
+adam_pruner = MedianPruner(n_startup_trials=1, n_warmup_steps=1, interval_steps=1)
+study_adam = optuna.create_study(direction='minimize', pruner=adam_pruner, study_name=adam_study_name, storage=f"sqlite:///{adam_study_file_path}")
 study_adam.optimize(lambda trial: objective(trial, 'Adam'), n_trials=50)
 
-
-study_pso = optuna.create_study(direction='minimize', pruner=pruner, study_name=pso_study_name, storage=f"sqlite:///{pso_study_file_path}")
+pso_pruner = MedianPruner(n_startup_trials=1, n_warmup_steps=1, interval_steps=1)
+study_pso = optuna.create_study(direction='minimize', pruner=pso_pruner, study_name=pso_study_name, storage=f"sqlite:///{pso_study_file_path}")
 study_pso.optimize(lambda trial: objective(trial, 'PSO'), n_trials=50)
 
 
